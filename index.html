@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>MEYHANE BATTLEPASS</title>
+<style type="text/css">
+html,body{margin:0;padding:0;background:#05090e;color:#dce8ef;font-family:Tahoma,Arial;font-size:11px}
+table{border-collapse:collapse}
+a{text-decoration:none;color:#78d6ff}
+.top{background:#140e08;border-bottom:1px solid #805a20}
+.logo{font-family:Georgia,serif;font-size:23px;font-weight:bold;color:#efc15c}
+.small{font-size:9px;color:#7e99ab}
+.gold{color:#f0c15b;font-weight:bold}
+.blue{color:#65d2ff;font-weight:bold}
+.green{color:#8ef09d;font-weight:bold}
+.dim{color:#657d8d}
+.box{background:#091721;border:1px solid #284a5d}
+.boxtitle{background:#0f2939;color:#f0c15b;font-weight:bold;font-size:13px;padding:6px;border-bottom:1px solid #31566a}
+.cell{padding:6px;border-bottom:1px solid #163342}
+.day{background:#08151e;border:1px solid #1d3545;text-align:center;padding:5px;color:#71899a}
+.today{background:#0e3853;border-color:#3696c5;color:#84ddff}
+.done{background:#123319;border-color:#388346;color:#8ef09d}
+.miss{background:#190e0b;color:#8d6259}
+.lock{background:#080e13;color:#526574}
+.bar{height:7px;background:#03090e;border:1px solid #315267}
+.fill{height:7px;background:#2eb9ed}
+.fillok{height:7px;background:#48c75d}
+.stat{padding:5px;border:1px solid #173747;background:#08141d}
+.footer{background:#02080d;border-top:1px solid #72511e;color:#6f8899;font-size:9px;padding:5px}
+</style>
+<script language="JavaScript" type="text/javascript">
+function gv(k,d){
+ var s=window.location.search;
+ if(!s||s.length<2)return d;
+ s=s.substring(1);
+ var a=s.split("&");
+ for(var i=0;i<a.length;i++){
+  var p=a[i].split("=");
+  if(p[0]==k){
+   var v=p.length>1?p[1]:"";
+   v=v.replace(/\+/g," ");
+   try{return unescape(v);}catch(e){return v;}
+  }
+ }
+ return d;
+}
+function gi(k,d){var n=parseInt(gv(k,d),10);return isNaN(n)?d:n;}
+function bit(m,n){return (m&(1<<n))!=0;}
+function esc(s){
+ s=String(s);
+ s=s.replace(/&/g,"&amp;");
+ s=s.replace(/</g,"&lt;");
+ s=s.replace(/>/g,"&gt;");
+ s=s.replace(/"/g,"&quot;");
+ return s;
+}
+function pct(a,b){
+ if(b<=0)return 0;
+ var p=parseInt((a*100)/b,10);
+ if(p<0)p=0;if(p>100)p=100;
+ return p;
+}
+function dots(n){
+ n=String(n);
+ var r="",c=0;
+ for(var i=n.length-1;i>=0;i--){
+  if(c>0&&c%3==0)r="."+r;
+  r=n.charAt(i)+r;c++;
+ }
+ return r;
+}
+function wr(s){document.write(s);}
+</script>
+</head>
+<body>
+<script language="JavaScript" type="text/javascript">
+var name=gv("name","OYUNCU").replace(/_/g," ");
+var coin=gi("coin",0),today=gi("today",0),day=gi("day",today);
+var wm=gi("wm",0),dm=gi("dm",0),wb=gi("wb",0);
+var dr=gv("dr","-"),weekr=gv("wr","-");
+var rank=gi("rank",0),rtotal=gi("rtotal",0);
+var rk=gi("rk",0),rd=gi("rd",0),rhs=gi("rhs",0),shots=gi("rshots",0),hits=gi("rhits",0),dmg=gi("rdmg",0);
+
+if(today<0)today=0;if(today>6)today=6;
+if(day<0)day=0;if(day>6)day=6;
+
+var reward=[150,200,250,300,350,500,500];
+var tc=[3,3,2,3,3,2,2];
+var tn=[
+ ["35 Dusman Oldur","5 Headshot Vur","60 Dakika Aktif Kal"],
+ ["50 Dusman Oldur","Deagle ile 5 Headshot","45 Dakika Aktif Kal"],
+ ["25.000 Hasar Ver","60 Dakika Aktif Kal",""],
+ ["2 Kez Bomba Kur","10 Headshot Vur","45 Dakika Aktif Kal"],
+ ["2 Kez C4 Coz","10 Headshot Vur","30 Dakika Aktif Kal"],
+ ["3 Bicak Killi","120 Dakika Aktif Kal",""],
+ ["100 Dusman Oldur","120 Dakika Aktif Kal",""]
+];
+var tt=[
+ [35,5,60],[50,5,45],[25000,60,0],[2,10,45],[2,10,30],[3,120,0],[100,120,0]
+];
+var pr=[],i;
+for(i=0;i<21;i++)pr[i]=gi("p"+i,0);
+
+var weekDone=0;
+for(i=0;i<7;i++)if(bit(wm,i))weekDone++;
+
+// HEADER
+wr("<table width='100%' cellspacing='0' cellpadding='0'>");
+wr("<tr><td class='top' style='padding:8px 10px'>");
+wr("<table width='100%' cellspacing='0' cellpadding='0'><tr>");
+wr("<td><div class='logo'>MEYHANE BATTLEPASS</div><div class='small'>GITHUB PAGES // LEGACY MOTD</div></td>");
+wr("<td align='right'><span class='small'>OYUNCU</span><br><span class='gold'>"+esc(name)+"</span></td>");
+wr("<td width='90' align='center'><span class='small'>COIN</span><br><span class='gold'>"+dots(coin)+"</span></td>");
+wr("<td width='90' align='center'><span class='small'>HAFTA</span><br><span class='green'>"+weekDone+"/7</span></td>");
+wr("</tr></table></td></tr>");
+
+// DAY STRIP
+wr("<tr><td style='padding:6px'><table width='100%' cellspacing='3' cellpadding='0'><tr>");
+for(i=0;i<7;i++){
+ var c="day";
+ var st="KILITLI";
+ if(bit(wm,i)){c+=" done";st="TAMAM";}
+ else if(i==today){c+=" today";st="BUGUN";}
+ else if(i<today){c+=" miss";st="KACIRILDI";}
+ else{c+=" lock";st="KILITLI";}
+ wr("<td class='"+c+"' width='14%'><b>"+(i+1)+". GUN</b><br>"+st+"<br><span class='gold'>"+reward[i]+" C</span></td>");
+}
+wr("</tr></table></td></tr>");
+
+// CONTENT
+wr("<tr><td style='padding:0 6px 6px 6px'>");
+wr("<table width='100%' cellspacing='5' cellpadding='0'><tr>");
+
+// LEFT TASKS
+wr("<td width='64%' valign='top'><div class='box'>");
+wr("<div class='boxtitle'>"+(today+1)+". GUN GOREVLERI &nbsp; <span class='small'>RESET: "+esc(dr)+"</span></div>");
+
+for(i=0;i<tc[today];i++){
+ var idx=today*3+i,cur=pr[idx],tar=tt[today][i],p=pct(cur,tar),done=cur>=tar;
+ wr("<div class='cell'>");
+ wr("<table width='100%' cellspacing='0' cellpadding='0'><tr>");
+ wr("<td><b>"+esc(tn[today][i])+"</b><br><span class='small'>Gorev ilerlemesi</span></td>");
+ wr("<td width='95' align='right'><span class='"+(done?"green":"blue")+"'>"+dots(cur)+" / "+dots(tar)+"</span></td>");
+ wr("</tr></table>");
+ wr("<table width='100%' class='bar' cellspacing='0' cellpadding='0'><tr>");
+ if(p>0)wr("<td class='"+(done?"fillok":"fill")+"' width='"+p+"%'></td>");
+ if(p<100)wr("<td width='"+(100-p)+"%'></td>");
+ wr("</tr></table>");
+ wr("</div>");
+}
+
+var dayDone=bit(wm,today),claimed=bit(dm,today);
+var state=claimed?"ODUL ALINDI":(dayDone?"ODUL HAZIR":"DEVAM EDIYOR");
+wr("<div class='cell'><b class='gold'>GUNLUK ODUL: "+reward[today]+" COIN</b><span style='float:right' class='"+(dayDone?"green":"blue")+"'>"+state+"</span><br><span class='small'>Odulu almak icin oyunda /bpmenu kullan.</span></div>");
+wr("</div></td>");
+
+// RIGHT
+wr("<td width='36%' valign='top'>");
+wr("<div class='box'><div class='boxtitle'>HAFTALIK BONUS</div>");
+wr("<table width='100%' cellspacing='0' cellpadding='0'>");
+wr("<tr><td class='stat'>Tamamlanan</td><td class='stat green' align='right'>"+weekDone+" / 7</td></tr>");
+wr("<tr><td class='stat'>7/7 Odul</td><td class='stat gold' align='right'>1000 Coin</td></tr>");
+wr("<tr><td class='stat'>Hafta Sonu</td><td class='stat blue' align='right'>"+esc(weekr)+"</td></tr>");
+wr("<tr><td class='stat'>Durum</td><td class='stat' align='right'>"+(wb?"ALINDI":(weekDone>=7?"ODUL HAZIR":"KILITLI"))+"</td></tr>");
+wr("</table></div>");
+
+wr("<div style='height:5px'></div>");
+
+var kd=rd>0?(rk/rd):rk;
+var acc=shots>0?((hits*100)/shots):0;
+var hsr=rk>0?((rhs*100)/rk):0;
+
+wr("<div class='box'><div class='boxtitle'>SERVER TOP15</div>");
+wr("<table width='100%' cellspacing='0' cellpadding='0'>");
+wr("<tr><td class='stat'>Sira</td><td class='stat gold' align='right'>#"+rank+" / "+rtotal+"</td></tr>");
+wr("<tr><td class='stat'>Kill / Death</td><td class='stat' align='right'>"+dots(rk)+" / "+dots(rd)+"</td></tr>");
+wr("<tr><td class='stat'>Headshot</td><td class='stat blue' align='right'>"+dots(rhs)+"</td></tr>");
+wr("<tr><td class='stat'>K/D</td><td class='stat' align='right'>"+kd.toFixed(2)+"</td></tr>");
+wr("<tr><td class='stat'>Isabet</td><td class='stat' align='right'>"+acc.toFixed(1)+"%</td></tr>");
+wr("<tr><td class='stat'>HS Orani</td><td class='stat' align='right'>"+hsr.toFixed(1)+"%</td></tr>");
+wr("<tr><td class='stat'>Toplam Hasar</td><td class='stat green' align='right'>"+dots(dmg)+"</td></tr>");
+wr("</table></div>");
+
+wr("</td></tr></table>");
+wr("</td></tr>");
+
+wr("<tr><td class='footer'>N veya /bp: BattlePass &nbsp;&nbsp; | &nbsp;&nbsp; /bpmenu: Oduller &nbsp;&nbsp; | &nbsp;&nbsp; GitHub Pages</td></tr>");
+wr("</table>");
+</script>
+
+<noscript>
+<table width="100%" height="100%"><tr><td align="center" valign="middle">
+<font face="Tahoma" color="#ffffff" size="3"><b>MEYHANE BATTLEPASS</b></font><br><br>
+<font face="Tahoma" color="#cccccc" size="2">
+Bu CS 1.6 istemcisinin MOTD tarayicisi Javascript'i tamamen kapatmis.<br>
+BattlePass verilerini gostermek icin eski tip Javascript destegi gerekiyor.
+</font>
+</td></tr></table>
+</noscript>
+</body>
+</html>
